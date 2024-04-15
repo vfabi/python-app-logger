@@ -127,7 +127,7 @@ def get_logger(
     # Telegram
     telegram_formatter = CustomHtmlFormatter(
         use_emoji=True,
-        fmt = '<b>%(app_name)s (%(app_version)s)</b>  <b>%(levelname)s</b>\n\n<b>Message:</b> <code>%(message)s</code>\n<b>Environment:</b> %(app_environment)s\n<b>CustomerId:</b> %(customer_id)s\n<b>POD:</b> %(pod)s\n<b>Source:</b> %(pathname)s:%(funcName)s(%(lineno)d)\n<b>Datetime:</b> %(asctime)s\n<b>Logger:</b> %(name)s\n'
+        fmt = '<b>%(app_name)s (%(app_version)s)</b>  <b>%(levelname)s</b>\n\n<b>Message:</b> <code>%(message)s</code>\n<b>Environment:</b> %(app_environment)s\n<b>CustomerId:</b> %(customer_id)s\n<b>Pod:</b> %(pod)s\n<b>Source:</b> %(pathname)s:%(funcName)s(%(lineno)d)\n<b>Datetime:</b> %(asctime)s\n<b>Logger:</b> %(name)s\n'
     )
     if telegram_bot_id and len(telegram_chat_ids) > 0:
         if telegram_chat_ids.get('critical'):
