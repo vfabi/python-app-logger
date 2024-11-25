@@ -1,0 +1,25 @@
+# Python
+__pycache__
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+
+# Virtual environment
+.env/
+.venv/
+.venv
+venv/
+
+# Special
+**/.vscode
+*.log
+**/*.log
+**/*.disabled
+**/.venv
+**/.tmp
+**/.archive
+**/.docs
+**/dev
+**/.dev
+
