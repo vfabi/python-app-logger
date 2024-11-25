@@ -99,6 +99,8 @@ def get_logger(
         app_name,
         app_version=None,
         app_environment=None,
+        pod=None,
+        customer_id=None,
         loglevel=DEFAULT_LOGLEVEL,
         logger_name=DEFAULT_LOGGER_NAME,
         telegram_bot_id=None,
@@ -108,6 +110,8 @@ def get_logger(
         app_name (str): application name.
         app_version (str): application version.
         app_environment (str): application environment.
+        pod (str): kubernetes pod name.
+        customer_id (str): customer ID.
         loglevel (str): loglevel (severity).
         logger_name (str): logger name.
         telegram_bot_id (str): Telegram bot id.
@@ -117,7 +121,7 @@ def get_logger(
     logger = logging.getLogger(logger_name)
 
     # Handler JSON
-    formatter_json = CustomJSONFormatter('{"app": {"name": "%(app_name)s", "localtime": "%(asctime)s", "environment": "%(app_environment)s", "severity": "%(levelname)s", "message": %(message)s, "version": "%(app_version)s", "logger": "%(name)s", "source": "%(pathname)s:%(funcName)s(%(lineno)d)", "source_pathname": "%(pathname)s", "source_funcname": "%(funcName)s", "source_lineno": "%(lineno)d"}}')
+    formatter_json = CustomJSONFormatter('{"app": {"name": "%(app_name)s", "localtime": "%(asctime)s", "environment": "%(app_environment)s", "severity": "%(levelname)s", "message": %(message)s, "customer_id": %(customer_id)s, "pod": %(pod)s, "version": "%(app_version)s", "logger": "%(name)s", "source": "%(pathname)s:%(funcName)s(%(lineno)d)", "source_pathname": "%(pathname)s", "source_funcname": "%(funcName)s", "source_lineno": "%(lineno)d"}}')
     handler_json = logging.StreamHandler()
     handler_json.setFormatter(formatter_json)
     handler_json.setLevel(loglevel)
@@ -126,7 +130,7 @@ def get_logger(
     # Handler Telegram
     formatter_telegram = CustomHtmlFormatter(
         use_emoji=True,
-        fmt='<b>%(app_name)s (%(app_version)s)</b>  <b>%(levelname)s</b>\n\n<b>Message:</b> <code>%(message)s</code>\n<b>Environment:</b> %(app_environment)s\n<b>Source:</b> %(pathname)s:%(funcName)s(%(lineno)d)\n<b>Datetime:</b> %(asctime)s\n<b>Logger:</b> %(name)s\n'
+        fmt='<b>%(app_name)s (%(app_version)s)</b>  <b>%(levelname)s</b>\n\n<b>Message:</b> <code>%(message)s</code>\n<b>Environment:</b> %(app_environment)s\n<b>CustomerId:</b> %(customer_id)s\n<b>Pod:</b> %(pod)s\n<b>Source:</b> %(pathname)s:%(funcName)s(%(lineno)d)\n<b>Datetime:</b> %(asctime)s\n<b>Logger:</b> %(name)s\n'
     )
     if telegram_chat_ids:
         if telegram_bot_id and len(telegram_chat_ids) > 0:
@@ -167,7 +171,9 @@ def get_logger(
         {
             "app_name": app_name,
             "app_version": app_version,
-            "app_environment": app_environment
+            "app_environment": app_environment,
+            "pod": pod,
+            "customer_id": customer_id
         }
     )
 
