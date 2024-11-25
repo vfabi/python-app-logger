@@ -1,37 +1,38 @@
 # python-app-logger
+
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/vfabi/python-app-logger)
 ![GitHub last commit](https://img.shields.io/github/last-commit/vfabi/python-app-logger)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-A custom python applications logging handler. Use custom JSON format and sends logs via Telegram Bot Api.
+Python applications custom logging handler. Use custom JSON format and sends logs via Telegram Bot API.
+
+## Status
+
+Production ready
 
 ## Features
-- Custom stream JSON logging handler
+- Custom JSON stream logging handler
 - Custom Telegram logging handler
 - Telegram logging handler loglevel (severity) routing
 
+## Usage
 
-# Requirements and dependencies
-- https://github.com/vfabi/python-telegram-handler
-
-
-# Usage
-
-## Setup
+### Setup
 Just run: `pip install git+https://github.com/vfabi/python-app-logger`
 
-## Application integration
-`get_loger` function arguments:  
+### Application integration
+`get_logger()` function arguments:  
 
-```
-    app_name (str): application name.  (MANDATORY)
-    app_version (str): application version.  (MANDATORY)
-    app_environment (str): application environment.  (MANDATORY)
-    loglevel (str): loglevel (severity).  (OPTIONAL)
-    logger_name (str): logger name.  (OPTIONAL)
-    telegram_bot_id (str): Telegram bot id.  (OPTIONAL)
-    telegram_chat_ids (dict): dict with severity - Telegram chat id mapping. Example: {'debug': '1234567890', 'info': '22334455', 'critical': '9988776655'}.  (OPTIONAL)
-```
+Name | Type | Description | Mandatory | Default | Example
+--- | --- | --- | --- | --- | ---
+app_name | str | application short name | True | | `myapp` |
+app_version | str | application version | False | | `1.0.1` |
+app_environment | str | application environment | False | | `dev` |
+loglevel | str | loglevel (severity) | False | `DEBUG` | Possible values: `DEBUG`,`INFO`,`WARNING`,`ERROR`,`CRITICAL`|
+logger_name | str | logger name | False | `main` | `myapp` |
+telegram_bot_id | str | Telegram bot id | False | | `1234567890:AAEwtYwterrqqq4RhXhl637vvvvvv` |
+telegram_chat_ids | dict | dict with severity - Telegram chat id mapping | False | | `{'debug': '1234567890', 'info': '22334455', 'critical': '9988776655'}` |
+
 
 Example:
 
@@ -58,8 +59,7 @@ logger.warning('WARNING_MESSAGE')
 logger.critical('CRITICAL_MESSAGE')
 ```
 
-
-# Contributing
+## Contributing
 Please refer to each project's style and contribution guidelines for submitting patches and additions. In general, we follow the "fork-and-pull" Git workflow.
 
  1. **Fork** the repo on GitHub
@@ -70,6 +70,5 @@ Please refer to each project's style and contribution guidelines for submitting 
 
 NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
-
-# License
+## License
 Apache 2.0

@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 DESCRIPTION = 'A custom python applications logging handler. Use custom JSON format and sends logs via Telegram Bot Api.'
 LONG_DESCRIPTION = open('README.md').read() + '\n\n' + open('CHANGELOG.md').read()
 
@@ -10,7 +10,7 @@ setup(
     version=VERSION,
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
-    long_description_content_type = "text/markdown",
+    long_description_content_type="text/markdown",
     keywords=['telegram', 'logging'],
     packages=['python_app_logger'],
     url='https://github.com/vfabi/python-app-logger',
