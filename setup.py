@@ -21,7 +21,7 @@ setup(
         'python-telegram-handler @ git+https://github.com/vfabi/python-telegram-handler.git@1.0.0'
     ],
     dependency_links=[
-        "git+https://github.com/vfabi/python-telegram-handler.git@1.0.0"
+        "git+https://github.com/vfabi/python-telegram-handler.git@1.0.1"
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
