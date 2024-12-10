@@ -18,7 +18,7 @@ setup(
     setup_requires=['wheel'],
     install_requires=[
         'wheel',
-        'python-telegram-handler @ git+https://github.com/vfabi/python-telegram-handler.git@1.0.0'
+        'python-telegram-handler @ git+https://github.com/vfabi/python-telegram-handler.git@1.0.1'
     ],
     dependency_links=[
         "git+https://github.com/vfabi/python-telegram-handler.git@1.0.1"
