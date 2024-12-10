@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-VERSION = '1.1.0'
+VERSION = '1.1.2'
 DESCRIPTION = 'A custom python applications logging handler. Use custom JSON format and sends logs via Telegram Bot Api.'
 LONG_DESCRIPTION = open('README.md').read() + '\n\n' + open('CHANGELOG.md').read()
 
