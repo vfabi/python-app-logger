@@ -4,6 +4,7 @@ __pycache__/
 *.py[cod]
 *.pyc
 *.pyo
+tests.py
 
 # Virtual environment
 .env/
