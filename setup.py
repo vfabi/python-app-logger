@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-VERSION = '1.1.2'
+VERSION = '2.0.0'
 DESCRIPTION = 'A custom python applications logging handler. Use custom JSON format and sends logs via Telegram Bot Api.'
 LONG_DESCRIPTION = open('README.md').read() + '\n\n' + open('CHANGELOG.md').read()
 
@@ -18,6 +18,7 @@ setup(
     setup_requires=['wheel'],
     install_requires=[
         'wheel',
+        'requests',
         'python-telegram-handler @ git+https://github.com/vfabi/python-telegram-handler.git@1.0.1'
     ],
     dependency_links=[
