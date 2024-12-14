@@ -87,7 +87,7 @@ class CustomJSONFormatter(logging.Formatter):
             return super().format(record)
 
 
-class JSONHTTPHandler(logging.Handler):
+class WebhookHandler(logging.Handler):
     '''JSON HTTP handler to send records using HTTP/JSON.'''
 
     def __init__(self, url):

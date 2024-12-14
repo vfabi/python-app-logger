@@ -3,7 +3,7 @@
 
 import logging
 from telegram_handler.handlers import TelegramHandler
-from .utils import SeverityFilter, CustomJSONFormatter, CustomHtmlFormatter, JSONHTTPHandler
+from .utils import SeverityFilter, CustomJSONFormatter, CustomHtmlFormatter, WebhookHandler
 
 
 DEFAULT_LOGLEVEL = 'DEBUG'
@@ -29,8 +29,10 @@ def get_logger(app_name, app_version=None, app_environment=None, loglevel=DEFAUL
                     }
                 },
                 'webhook': {
-                    'url': 'https://webhooks.example.com/webhooks',
-                    'loglevel': 'WARNING'  # DEBUG,INFO,WARNING,ERROR,CRITICAL
+                    'debug':'https://webhooks.example.com/webhooks?param=1',
+                    'info':'https://webhooks.example.com/webhooks?param=2',
+                    'error':'https://webhooks.example.com/webhooks?param=3',
+                    'warning':'https://webhooks.example.com/webhooks?param=4'
                 }
             }
     '''
@@ -41,10 +43,10 @@ def get_logger(app_name, app_version=None, app_environment=None, loglevel=DEFAUL
     formatter_json = CustomJSONFormatter('{"app": {"name": "%(app_name)s", "localtime": "%(asctime)s", "environment": "%(app_environment)s", "severity": "%(levelname)s", "message": %(message)s, "version": "%(app_version)s", "logger": "%(name)s", "source": "%(pathname)s:%(funcName)s(%(lineno)d)", "source_pathname": "%(pathname)s", "source_funcname": "%(funcName)s", "source_lineno": "%(lineno)d"}}')
     formatter_telegram = CustomHtmlFormatter(
         use_emoji=True,
-        fmt='<b>%(app_name)s (%(app_version)s)</b>  <b>%(levelname)s</b>\n\n<b>Message:</b> <code>%(message)s</code>\n<b>Environment:</b> %(app_environment)s\n<b>Source:</b> %(pathname)s:%(funcName)s(%(lineno)d)\n<b>Datetime:</b> %(asctime)s\n<b>Logger:</b> %(name)s\n'
+        fmt='<b>%(app_name)s (%(app_version)s)</b>  <b>%(levelname)s</b>\n\n<b>Message:</b> <code>%(message)s</code>\n<b>Environment:</b> %(app_environment)s\n<b>Datetime:</b> %(asctime)s\n<b>Source:</b> %(pathname)s:%(funcName)s(%(lineno)d)\n'
     )
 
-    # Handler JSON (main)
+    # Handler Stream (main)
     handler_json = logging.StreamHandler()
     handler_json.setFormatter(formatter_json)
     handler_json.setLevel(loglevel)
@@ -54,15 +56,36 @@ def get_logger(app_name, app_version=None, app_environment=None, loglevel=DEFAUL
     if channels.get('webhook'):
         channel = channels['webhook']
 
-        if channel.get('url'):
-            handler_webhook = JSONHTTPHandler(url=channel['url'])
-            handler_webhook.setFormatter(formatter_json)
-            if channel.get('loglevel'):
-                # loglevel_webhook = getattr(logging, channel['loglevel'].upper(), None)
-                handler_webhook.setLevel(channel['loglevel'])
-            else:
-                handler_webhook.setLevel(loglevel)
-            logger.addHandler(handler_webhook)
+        if channel.get('critical'):
+            handler_webhook_critical = WebhookHandler(url=channel['critical'])
+            handler_webhook_critical.setFormatter(formatter_json)
+            handler_webhook_critical.setLevel('CRITICAL')
+            handler_webhook_critical.addFilter(SeverityFilter(logging.CRITICAL))
+            logger.addHandler(handler_webhook_critical)
+        if channel.get('error'):
+            handler_webhook_error = WebhookHandler(url=channel['error'])
+            handler_webhook_error.setFormatter(formatter_json)
+            handler_webhook_error.setLevel('ERROR')
+            handler_webhook_error.addFilter(SeverityFilter(logging.ERROR))
+            logger.addHandler(handler_webhook_error)
+        if channel.get('warning'):
+            handler_webhook_warning = WebhookHandler(url=channel['warning'])
+            handler_webhook_warning.setFormatter(formatter_json)
+            handler_webhook_warning.setLevel('WARNING')
+            handler_webhook_warning.addFilter(SeverityFilter(logging.WARNING))
+            logger.addHandler(handler_webhook_warning)
+        if channel.get('info'):
+            handler_webhook_info = WebhookHandler(url=channel['info'])
+            handler_webhook_info.setFormatter(formatter_json)
+            handler_webhook_info.setLevel('INFO')
+            handler_webhook_info.addFilter(SeverityFilter(logging.INFO))
+            logger.addHandler(handler_webhook_info)
+        if channel.get('debug'):
+            handler_webhook_debug = WebhookHandler(url=channel['debug'])
+            handler_webhook_debug.setFormatter(formatter_json)
+            handler_webhook_debug.setLevel('DEBUG')
+            handler_webhook_debug.addFilter(SeverityFilter(logging.DEBUG))
+            logger.addHandler(handler_webhook_debug)
 
     # Handler Telegram
     if channels.get('telegram'):
@@ -112,11 +135,11 @@ def get_logger(app_name, app_version=None, app_environment=None, loglevel=DEFAUL
 
     logger_adapter.logger.setLevel(loglevel)
 
-    # DEBUG:  -->
+    # # DEBUG:  -->
     # print('-----')
     # for handler in logger.handlers:
     #     print(f'Handler: {handler.__class__.__name__} - {logging.getLevelName(handler.level)}')
     # print('-----')
-    # DEBUG:  <--
+    # # DEBUG:  <--
 
     return logger_adapter
