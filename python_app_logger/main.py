@@ -10,7 +10,15 @@ DEFAULT_LOGLEVEL = 'DEBUG'
 DEFAULT_LOGGER_NAME = 'app'
 
 
-def get_logger(app_name, app_version=None, app_environment=None, loglevel=DEFAULT_LOGLEVEL, logger_name=DEFAULT_LOGGER_NAME, **channels):
+def get_logger(
+        app_name,
+        app_version=None,
+        app_environment=None,
+        pod=None,
+        customer_id=None,
+        loglevel=DEFAULT_LOGLEVEL,
+        logger_name=DEFAULT_LOGGER_NAME,
+        **channels):
     '''
     Args:
         app_name (str): application name.
@@ -40,10 +48,10 @@ def get_logger(app_name, app_version=None, app_environment=None, loglevel=DEFAUL
     logger = logging.getLogger(logger_name)
 
     # Formatters
-    formatter_json = CustomJSONFormatter('{"app": {"name": "%(app_name)s", "localtime": "%(asctime)s", "environment": "%(app_environment)s", "severity": "%(levelname)s", "message": %(message)s, "version": "%(app_version)s", "logger": "%(name)s", "source": "%(pathname)s:%(funcName)s(%(lineno)d)", "source_pathname": "%(pathname)s", "source_funcname": "%(funcName)s", "source_lineno": "%(lineno)d"}}')
+    formatter_json = CustomJSONFormatter('{"app": {"name": "%(app_name)s", "localtime": "%(asctime)s", "environment": "%(app_environment)s", "severity": "%(levelname)s", "message": %(message)s, "customer_id": %(customer_id)s, "pod": %(pod)s, "version": "%(app_version)s", "logger": "%(name)s", "source": "%(pathname)s:%(funcName)s(%(lineno)d)", "source_pathname": "%(pathname)s", "source_funcname": "%(funcName)s", "source_lineno": "%(lineno)d"}}')
     formatter_telegram = CustomHtmlFormatter(
         use_emoji=True,
-        fmt='<b>%(app_name)s (%(app_version)s)</b>  <b>%(levelname)s</b>\n\n<b>Message:</b> <code>%(message)s</code>\n<b>Environment:</b> %(app_environment)s\n<b>Datetime:</b> %(asctime)s\n<b>Source:</b> %(pathname)s:%(funcName)s(%(lineno)d)\n'
+        fmt='<b>%(app_name)s (%(app_version)s)</b>  <b>%(levelname)s</b>\n\n<b>Message:</b> <code>%(message)s</code>\n<b>Environment:</b> %(app_environment)s\n<b>CustomerId:</b> %(customer_id)s\n<b>Pod:</b> %(pod)s\n<b>Datetime:</b> %(asctime)s\n<b>Source:</b> %(pathname)s:%(funcName)s(%(lineno)d)\n'
     )
 
     # Handler Stream (main)
@@ -129,7 +137,9 @@ def get_logger(app_name, app_version=None, app_environment=None, loglevel=DEFAUL
         {
             "app_name": app_name,
             "app_version": app_version,
-            "app_environment": app_environment
+            "app_environment": app_environment,
+            "pod": pod,
+            "customer_id": customer_id
         }
     )
 
