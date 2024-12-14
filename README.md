@@ -11,10 +11,11 @@ Python applications custom logging handler. Use custom JSON format and sends log
 Production ready
 
 ## Features
-- Custom JSON stream logging handler + custom formatter
-- Custom Telegram logging handler + custom formatter
+- Custom JSON stream logging handler + custom json formatter
+- Custom Telegram logging handler + custom formatter (`telegram`)
 - Telegram logging handler loglevel (severity) routing
-- Custom JSON http logging handler, to send log records as JSON via HTTP/POST (Webhooks)
+- Custom Webhook logging handler, to send log records as JSON via HTTP/POST (`webhook`)
+- Webhook logging handler loglevel (severity) routing
 
 ## Usage
 
@@ -51,8 +52,10 @@ channels = {
         }
     },
     'webhook': {
-        'url': 'https://webhooks.example.com/webhooks',
-        'loglevel': 'WARNING'  # DEBUG,INFO,WARNING,ERROR,CRITICAL
+        'debug':'https://webhooks.example.com/webhooks?param=1',
+        'info':'https://webhooks.example.com/webhooks?param=2',
+        'error':'https://webhooks.example.com/webhooks?param=3',
+        'warning':'https://webhooks.example.com/webhooks?param=4'
     }
 }
 
@@ -82,8 +85,10 @@ Args:
                 }
             },
             'webhook': {
-                'url': 'https://webhooks.example.com/webhooks',
-                'loglevel': 'WARNING'  # DEBUG,INFO,WARNING,ERROR,CRITICAL
+                'debug':'https://webhooks.example.com/webhooks?param=1',
+                'info':'https://webhooks.example.com/webhooks?param=2',
+                'error':'https://webhooks.example.com/webhooks?param=3',
+                'warning':'https://webhooks.example.com/webhooks?param=4'
             }
         }
 '''
