@@ -24,6 +24,8 @@ def get_logger(
         app_name (str): application name.
         app_version (str): application version. Optional.
         app_environment (str): application environment. Optional.
+        pod (str): application instance pod name. Optional.
+        customer_id (str): customer id. Optional.
         loglevel (str): loglevel (severity). For main JSON stream handler. Optional. Possible values: DEBUG,INFO,WARNING,ERROR,CRITICAL.
         logger_name (str): logger name. Optional.
         channels (dict): dict of channels configuration.  Optional. Example:
@@ -135,11 +137,11 @@ def get_logger(
     logger_adapter = logging.LoggerAdapter(
         logger,
         {
-            "app_name": app_name,
-            "app_version": app_version,
-            "app_environment": app_environment,
-            "pod": pod,
-            "customer_id": customer_id
+            "app_name": str(app_name),
+            "app_version": str(app_version),
+            "app_environment": str(app_environment),
+            "pod": str(pod),
+            "customer_id": str(customer_id)
         }
     )
 
