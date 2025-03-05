@@ -30,6 +30,8 @@ Name | Type | Description | Mandatory | Default | Example
 app_name | str | application short name | True | | `myapp` |
 app_version | str | application version | False | | `1.0.1` |
 app_environment | str | application environment | False | | `dev` |
+pod | str | application instance pod name | False | | `app-ba715b771117421d8db1b8b80f6a502f-84d4485d78-jgddw` |
+customer_id | str | customer id | False | | `333` |
 loglevel | str | loglevel (severity). For main JSON stream handler. | False | `DEBUG` | Possible values: `DEBUG`,`INFO`,`WARNING`,`ERROR`,`CRITICAL`|
 logger_name | str | logger name | False | `main` | `myapp` |
 channels | dict | Dict of channels configuration | False | | Example you can find below |
@@ -63,6 +65,8 @@ logger = get_logger(
     app_name='myApp',
     app_version='1.0.1',
     app_environment='dev',
+    pod='app-ba715b771117421d8db1b8b80f6a502f-84d4485d78-jgddw',
+    customer_id='333',
     loglevel='WARNING',
     **channels
 )
@@ -72,6 +76,8 @@ Args:
     app_name (str): application name.
     app_version (str): application version. Optional.
     app_environment (str): application environment. Optional.
+    pod (str): application instance pod name. Optional.
+    customer_id (str): customer id. Optional.
     loglevel (str): loglevel (severity). For main JSON stream handler. Optional. Possible values: DEBUG,INFO,WARNING,ERROR,CRITICAL.
     logger_name (str): logger name. Optional.
     channels (dict): dict of channels configuration.  Optional. Example:
