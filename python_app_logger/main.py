@@ -50,7 +50,7 @@ def get_logger(
     logger = logging.getLogger(logger_name)
 
     # Formatters
-    formatter_json = CustomJSONFormatter('{"app": {"name": "%(app_name)s", "localtime": "%(asctime)s", "environment": "%(app_environment)s", "severity": "%(levelname)s", "message": %(message)s, "customer_id": %(customer_id)s, "pod": %(pod)s, "version": "%(app_version)s", "logger": "%(name)s", "source": "%(pathname)s:%(funcName)s(%(lineno)d)", "source_pathname": "%(pathname)s", "source_funcname": "%(funcName)s", "source_lineno": "%(lineno)d"}}')
+    formatter_json = CustomJSONFormatter('{"app": {"name": "%(app_name)s", "localtime": "%(asctime)s", "environment": "%(app_environment)s", "severity": "%(levelname)s", "message": %(message)s, "customer_id": "%(customer_id)s", "pod": "%(pod)s", "version": "%(app_version)s", "logger": "%(name)s", "source": "%(pathname)s:%(funcName)s(%(lineno)d)", "source_pathname": "%(pathname)s", "source_funcname": "%(funcName)s", "source_lineno": "%(lineno)d"}}')
     formatter_telegram = CustomHtmlFormatter(
         use_emoji=True,
         fmt='<b>%(app_name)s (%(app_version)s)</b>  <b>%(levelname)s</b>\n\n<b>Message:</b> <code>%(message)s</code>\n<b>Environment:</b> %(app_environment)s\n<b>CustomerId:</b> %(customer_id)s\n<b>Pod:</b> %(pod)s\n<b>Datetime:</b> %(asctime)s\n<b>Source:</b> %(pathname)s:%(funcName)s(%(lineno)d)\n'
